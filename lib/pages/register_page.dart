@@ -1,5 +1,9 @@
+import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import 'login_page.dart';
 
 class RegisterPage extends StatefulWidget {
   final VoidCallback showLoginPage;
@@ -13,6 +17,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmpasswordController = TextEditingController();
+  final _auth = FirebaseAuth.instance;
 
   @override
   void dispose() {
@@ -24,11 +29,28 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Future signUp() async {
     if (passwordConfirmed()) {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-      );
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+            email: _emailController.text.trim(),
+            password: _passwordController.text.trim(),
+          )
+          .then((value) =>
+              {postDetailsToFirestore(_emailController.text.trim(), role)})
+          .catchError((e) {});
     }
+  }
+
+  postDetailsToFirestore(String email, String rool) async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    var user = _auth.currentUser;
+    CollectionReference ref = FirebaseFirestore.instance.collection('users');
+    ref.doc(user!.uid).set({'email': _emailController.text, 'role': role});
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => LoginPage(
+                  showRegisterPage: () {},
+                )));
   }
 
   bool passwordConfirmed() {
@@ -39,6 +61,14 @@ class _RegisterPageState extends State<RegisterPage> {
       return false;
     }
   }
+
+  File? file;
+  var options = [
+    'Talent',
+    'Business',
+  ];
+  var _currentItemSelected = "Talent";
+  var role = "Business";
 
   @override
   Widget build(BuildContext context) {
@@ -145,6 +175,52 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 SizedBox(height: 20),
+
+                //Select role
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Select Role : ",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    DropdownButton<String>(
+                      dropdownColor: Colors.blue[900],
+                      isDense: true,
+                      isExpanded: false,
+                      iconEnabledColor: Colors.white,
+                      focusColor: Colors.white,
+                      items: options.map((String dropDownStringItem) {
+                        return DropdownMenuItem<String>(
+                          value: dropDownStringItem,
+                          child: Text(
+                            dropDownStringItem,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (newValueSelected) {
+                        setState(() {
+                          _currentItemSelected = newValueSelected!;
+                          role = newValueSelected;
+                        });
+                      },
+                      value: _currentItemSelected,
+                    ),
+                  ],
+                ),
+
+                SizedBox(
+                  height: 50,
+                ),
                 //Sign In Button
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
