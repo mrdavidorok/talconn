@@ -1,9 +1,7 @@
 import 'package:issue24/firebase_options.dart';
-import 'package:issue24/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:issue24/auth/main_page.dart';
-import 'pages/login_page.dart';
+import 'package:issue24/pages/register_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +16,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MainPage(),
+      home: RegisterPage(
+        showLoginPage: () {},
+      ),
     );
   }
 }

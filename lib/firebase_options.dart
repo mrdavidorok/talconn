@@ -66,7 +66,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '956150980767',
     projectId: 'eelspaceapp',
     storageBucket: 'eelspaceapp.appspot.com',
-    iosClientId: '956150980767-4egp1092rcj9r379eflj21vvba7of4d4.apps.googleusercontent.com',
+    iosClientId:
+        '956150980767-4egp1092rcj9r379eflj21vvba7of4d4.apps.googleusercontent.com',
     iosBundleId: 'com.example.issue24',
   );
 
@@ -76,7 +77,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '956150980767',
     projectId: 'eelspaceapp',
     storageBucket: 'eelspaceapp.appspot.com',
-    iosClientId: '956150980767-4egp1092rcj9r379eflj21vvba7of4d4.apps.googleusercontent.com',
+    iosClientId:
+        '956150980767-4egp1092rcj9r379eflj21vvba7of4d4.apps.googleusercontent.com',
     iosBundleId: 'com.example.issue24',
   );
 }
