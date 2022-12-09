@@ -40,7 +40,7 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-  postDetailsToFirestore(String email, String rool) async {
+  postDetailsToFirestore(String email, String role) async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     var user = _auth.currentUser;
     CollectionReference ref = FirebaseFirestore.instance.collection('users');
@@ -63,10 +63,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   File? file;
-  var options = [
-    'Talent',
-    'Business',
-  ];
+  var options = ['Talent', 'Business', 'Startup'];
   var _currentItemSelected = "Talent";
   var role = "Business";
 
@@ -183,26 +180,26 @@ class _RegisterPageState extends State<RegisterPage> {
                     Text(
                       "Select Role : ",
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 15,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                     ),
                     DropdownButton<String>(
-                      dropdownColor: Colors.blue[900],
+                      dropdownColor: Colors.grey[200],
                       isDense: true,
                       isExpanded: false,
                       iconEnabledColor: Colors.white,
-                      focusColor: Colors.white,
+                      focusColor: Colors.grey[300],
                       items: options.map((String dropDownStringItem) {
                         return DropdownMenuItem<String>(
                           value: dropDownStringItem,
                           child: Text(
                             dropDownStringItem,
                             style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
+                              color: Colors.black,
+                              // fontWeight: FontWeight.bold,
+                              fontSize: 15,
                             ),
                           ),
                         );
@@ -252,7 +249,13 @@ class _RegisterPageState extends State<RegisterPage> {
                   children: [
                     Text('Already a member?'),
                     GestureDetector(
-                      onTap: widget.showLoginPage,
+                      onTap: (() {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: ((context) =>
+                                    LoginPage(showRegisterPage: (() {})))));
+                      }),
                       child: Text(
                         ' Login Now',
                         style: TextStyle(

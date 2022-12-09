@@ -3,6 +3,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:issue24/pages/register_page.dart';
+import 'package:issue24/startup.dart';
 import '../talents.dart';
 import '../business.dart';
 
@@ -41,6 +43,13 @@ class _LoginPageState extends State<LoginPage> {
             context,
             MaterialPageRoute(
               builder: (context) => Business(),
+            ),
+          );
+        } else if ((documentSnapshot.get('role') == "Startup")) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Startup(),
             ),
           );
         } else {
@@ -181,7 +190,14 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       Text('Not a member?'),
                       GestureDetector(
-                        onTap: widget.showRegisterPage,
+                        onTap: (() {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    RegisterPage(showLoginPage: (() {})),
+                              ));
+                        }),
                         child: Text(
                           ' Register now',
                           style: TextStyle(

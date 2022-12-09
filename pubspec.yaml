@@ -39,6 +39,8 @@ dependencies:
   firebase_auth: ^4.1.4
   cloud_firestore: ^4.1.0
   firebase_core: ^2.4.0
+  snippet_coder_utils: ^1.0.12
+  youtube_player_flutter: ^8.1.1
 
 dev_dependencies:
   flutter_test:
@@ -65,6 +67,10 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - asset/eelspace.png
+    - asset/search.gif
+    - asset/Business.png
+    - asset/image.png
+    - asset/talents.gif
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
