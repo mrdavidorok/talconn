@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
+import 'package:image_picker_web/image_picker_web.dart';
 
 void main() {
   runApp(MyApp());
@@ -25,6 +27,8 @@ class PostStartup extends StatefulWidget {
 }
 
 class _PostStartupState extends State<PostStartup> {
+  bool imageAvailable = false;
+  late Uint8List imageFile;
   List<dynamic> talents = [];
 
   String? talentId;
@@ -149,14 +153,26 @@ class _PostStartupState extends State<PostStartup> {
                 paddingRight: 15,
               ),
               SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.all(15.0),
+              Container(
+                  height: 200,
+                  width: 200,
+                  child: imageAvailable
+                      ? Image.memory(imageFile)
+                      : const SizedBox()),
+              SizedBox(height: 20),
+              GestureDetector(
+                onTap: () async {
+                  final image = await ImagePickerWeb.getImageAsBytes();
+                  setState(() {
+                    imageFile = image!;
+                    imageAvailable = true;
+                  });
+                },
                 child: Container(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image(
-                      image: AssetImage('asset/image.png'),
-                    ),
+                  height: 50,
+                  width: 150,
+                  child: Center(
+                    child: Text('Upload Startup Logo'),
                   ),
                 ),
               ),

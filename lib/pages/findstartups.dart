@@ -8,68 +8,84 @@ class FindStartups extends StatefulWidget {
 }
 
 class _FindStartupsState extends State<FindStartups> {
-  final _textCOntroller = TextEditingController();
+  List<Map<String, dynamic>> _allUsers = [
+    {'id': 1, 'name': 'Assisteva', "Industry": 'Education'},
+    {'id': 2, 'name': 'Hemosave', "Industry": 'Health'},
+    {'id': 3, 'name': 'FanIsFun', "Industry": 'Sport'},
+    {'id': 4, 'name': 'Perk of Points', "Industry": 'Technology'},
+    {'id': 5, 'name': 'RiseHall', "Industry": 'Education'},
+    {'id': 6, 'name': 'SafeHouse', "Industry": 'Logistics'},
+  ];
 
-  //store user search into a variable
-  String userSearch = '';
+  List<Map<String, dynamic>> _founderUsers = [];
+  @override
+  void initState() {
+    _founderUsers = _allUsers;
+    super.initState();
+  }
+
+  void _runFilter(String enterKeyword) {
+    List<Map<String, dynamic>> results = [];
+    if (enterKeyword.isEmpty) {
+      results = _allUsers;
+    } else {
+      results = _allUsers
+          .where((user) => user['Industry']
+              .toLowerCase()
+              .contains(enterKeyword.toLowerCase()))
+          .toList();
+    }
+
+    setState(() {
+      _founderUsers = results;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.deepPurple,
-        title: Text(userSearch),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Center(child: Image(image: AssetImage('asset/search.gif'))),
-            Center(
-                child: Text(
-              userSearch,
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-            )),
-            SizedBox(height: 20),
-            TextField(
-              controller: _textCOntroller,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                hintText: 'e.g: Ecommerce',
-                suffixIcon: IconButton(
-                  onPressed: () {
-                    _textCOntroller.clear();
-                  },
-                  icon: const Icon(Icons.clear),
-                ),
+        appBar: AppBar(
+          title: Text('Search Startups'),
+          backgroundColor: Colors.deepPurple,
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              TextField(
+                onChanged: (value) => _runFilter(value),
+                decoration: InputDecoration(
+                    labelText: 'Search Startups',
+                    suffixIcon: Icon(Icons.search)),
               ),
-            ),
-            SizedBox(height: 5),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(6),
-              child: MaterialButton(
-                onPressed: () {
-                  //update the search text into our variable
-                  setState(() {
-                    userSearch = _textCOntroller.text;
-                  });
-                },
-                color: Colors.deepPurple,
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    'Search',
-                    style: TextStyle(color: Colors.white),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: _founderUsers.length,
+                  itemBuilder: (context, index) => Card(
+                    key: ValueKey(_founderUsers[index]['id']),
+                    color: Colors.deepPurple,
+                    elevation: 4,
+                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    child: ListTile(
+                      leading: Text(
+                        _founderUsers[index]['id'].toString(),
+                        style:
+                            const TextStyle(fontSize: 24, color: Colors.white),
+                      ),
+                      title: Text(
+                        _founderUsers[index]['name'],
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      subtitle: Text(
+                          '${_founderUsers[index]['Industry'].toString()}',
+                          style: TextStyle(color: Colors.white)),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-      ),
-    );
+            ],
+          ),
+        ));
   }
 }

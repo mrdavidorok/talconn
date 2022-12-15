@@ -1,7 +1,10 @@
+import 'dart:ui';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:issue24/pages/findstartups.dart';
 import 'package:issue24/pages/postservice.dart';
+import 'package:issue24/pages/support.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import 'pages/login_page.dart';
@@ -14,7 +17,7 @@ class Talent extends StatefulWidget {
 }
 
 class _TalentState extends State<Talent> {
-  final videoURL = "https://www.youtube.com/watch?v=XH6IT_tsSUI";
+  final videoURL = "https://www.youtube.com/watch?v=_u4_iWCvZ5c";
   late YoutubePlayerController _controller;
 
   @override
@@ -106,7 +109,75 @@ class _TalentState extends State<Talent> {
                 )
               ],
             ),
-          )
+          ),
+          SizedBox(height: 30),
+          FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Support(),
+                  ));
+            },
+            backgroundColor: Colors.deepPurple,
+            child: Icon(Icons.support_agent),
+          ),
+          SizedBox(height: 20),
+          Row(
+            children: [
+              MaterialButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                elevation: 5,
+                height: 40,
+                onPressed: (() {}),
+                child: Text(
+                  'Become a Talent',
+                  style: TextStyle(color: Colors.white),
+                ),
+                color: Colors.deepPurple,
+              ),
+              SizedBox(width: 10),
+              MaterialButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                elevation: 5,
+                height: 40,
+                onPressed: (() {}),
+                child: Text(
+                  'Become a Business',
+                  style: TextStyle(color: Colors.white),
+                ),
+                color: Colors.deepPurple,
+              ),
+              SizedBox(width: 10),
+              MaterialButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                elevation: 5,
+                height: 40,
+                onPressed: (() {}),
+                child: Text(
+                  'Post a Service',
+                  style: TextStyle(color: Colors.white),
+                ),
+                color: Colors.deepPurple,
+              ),
+              SizedBox(width: 10),
+              MaterialButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                elevation: 5,
+                height: 40,
+                onPressed: (() {}),
+                child: Text(
+                  'Post a Job',
+                  style: TextStyle(color: Colors.white),
+                ),
+                color: Colors.deepPurple,
+              ),
+            ],
+          ),
         ],
       ),
     );
